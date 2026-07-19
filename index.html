@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WTTG3 Assistant — Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/nav.css">
+<style>
+  .hub-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+    gap:28px;
+    margin:40px 0 20px;
+  }
+  .hub-card{
+    display:block;
+    background:var(--paper);
+    color:var(--ink);
+    text-decoration:none;
+    padding:26px 24px;
+    border-radius:2px;
+    box-shadow:0 8px 16px rgba(0,0,0,0.45);
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .hub-card:hover{transform:translateY(-4px); box-shadow:0 14px 26px rgba(0,0,0,0.55);}
+  .hub-card .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--rust);
+  }
+  .hub-card h2{
+    font-family:'Special Elite', monospace;
+    font-size:1.5rem;
+    margin:6px 0 8px;
+  }
+  .hub-card p{font-size:13.5px; line-height:1.6; color:#3a3327; margin:0;}
+</style>
+</head>
+<body data-page="home">
+<div class="wrap">
+
+  <header class="hero">
+    <div class="stamp-num">CASE FILE NO. 003 — SIMON ZHAO / “THE GAME”</div>
+    <h1 class="title">WTTG3 Assistant</h1>
+    <p class="subtitle">Raccolta non ufficiale di strumenti e guide per <strong>Welcome to the Game III</strong>, costruita a partire dai dossier di gioco e dalle note della community.</p>
+    <nav class="site-nav" id="site-nav"></nav>
+    <div class="tape-divider"></div>
+  </header>
+
+  <div class="hub-grid">
+    <a class="hub-card" href="threats.html">
+      <div class="eyebrow">Sezione</div>
+      <h2>Minacce</h2>
+      <p>Dossier su Noir, Tanner, Cletus, Lucas, il Rapitore, il Respiratore e Tucker: meccaniche, contromisure e segnali da riconoscere.</p>
+    </a>
+    <a class="hub-card" href="virtmesh.html">
+      <div class="eyebrow">Sezione</div>
+      <h2>VirtMesh</h2>
+      <p>Come funziona lo spazio virtuale di hacking: il puzzle INJ3KT-R, la differenza tra MOUNT e MINE, e come muoversi nella rete senza perdere l'accesso.</p>
+    </a>
+  </div>
+
+  <div class="roadmap">
+    <h4>// In lavorazione</h4>
+    <div class="roadmap-grid">
+      <div class="roadmap-item"><b>Wiki Block</b>Mappa dei 52 siti darknet, orari e indizi chiave</div>
+      <div class="roadmap-item"><b>Note / Master Key</b>Blocco appunti con compilazione automatica</div>
+      <div class="roadmap-item"><b>Mercato</b>Prezzi upgrade, oggetti utili</div>
+      <div class="roadmap-item"><b>Trainer INJ3KT-R</b>Versione interattiva del puzzle di hacking</div>
+    </div>
+  </div>
+
+  <footer class="credits">Fan project non ufficiale · Welcome to the Game III è proprietà di Reflect Studios · dati aggiornati a luglio 2026, verificare dopo ogni patch</footer>
+</div>
+
+<script src="js/nav.js"></script>
+</body>
+</html>

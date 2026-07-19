@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WTTG3 Assistant — VirtMesh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/nav.css">
+<link rel="stylesheet" href="css/virtmesh.css">
+</head>
+<body data-page="virtmesh">
+<div class="wrap">
+
+  <header class="hero">
+    <div class="stamp-num">CASE FILE NO. 003 — ALLEGATO TECNICO</div>
+    <h1 class="title">VirtMesh</h1>
+    <p class="subtitle">Come funziona lo spazio virtuale per craccare altri computer, navigare nel Dark Net o minare criptovaluta.</p>
+    <nav class="site-nav" id="site-nav"></nav>
+    <div class="tape-divider"></div>
+  </header>
+
+  <div class="annex">
+    <h2>01 — Cos'è VirtMesh</h2>
+    <p>VirtMesh è la rete virtuale in cui appari come un punto centrale collegato ad altri computer sparsi nella mappa. Ogni computer non ancora craccato appare come un'icona con un <span class="term">lucchetto</span>; una volta violato con successo, mostra invece uno schermo verde con il nome utente del proprietario.</p>
+    <p>Da un computer craccato puoi scegliere se usarlo per navigare nel Dark Net oppure per minare criptovaluta passivamente (vedi sezione 03).</p>
+  </div>
+
+  <div class="annex">
+    <h2>02 — Il minigioco di hacking: INJ3KT-R</h2>
+    <p>Per craccare un computer devi completare un puzzle su una griglia di celle a scacchiera.</p>
+
+    <div class="mini-grid" aria-hidden="true">
+      <div class="mini-cell light"></div>
+      <div class="mini-cell dark target"></div>
+      <div class="mini-cell light"></div>
+
+      <div class="mini-cell dark"></div>
+      <div class="mini-cell light"></div>
+      <div class="mini-cell dark target"></div>
+
+      <div class="mini-cell light"></div>
+      <div class="mini-cell dark"></div>
+      <div class="mini-cell light"></div>
+
+      <div class="mini-cell dark"></div>
+      <div class="mini-cell light"></div>
+      <div class="mini-cell dark"></div>
+    </div>
+
+    <h3>Obiettivo</h3>
+    <ul>
+      <li>Il percorso che costruisci deve <span class="term">alternare i colori delle celle</span> passo dopo passo (nella griglia a scacchiera avviene naturalmente muovendosi tra celle adiacenti in orizzontale o verticale).</li>
+      <li>Il percorso deve <span class="term">passare per ogni cella evidenziata</span> (contorno acceso) prima di arrivare alla fine.</li>
+    </ul>
+
+    <h3>Controlli</h3>
+    <ul>
+      <li>Clicca con il <span class="term">tasto sinistro [LMB]</span> su una cella per impostare la direzione del flusso.</li>
+      <li>Cliccando più volte sulla stessa cella cicli tra le direzioni in quest'ordine: <span class="term">Su → Destra → Giù → Sinistra</span>.</li>
+    </ul>
+
+    <h3>Cosa succede in caso di errore</h3>
+    <p>Se il percorso creato non è valido, l'hack va in <span class="term">FAIL</span>. Non è una perdita permanente: vieni solo <span class="term">bloccato temporaneamente</span> dal computer bersaglio, quindi puoi semplicemente riprovare dopo un po'.</p>
+    <div class="warn-line">Nota: i dettagli esatti su dimensione della griglia, numero di celle evidenziate e tempo di blocco possono variare da un computer all'altro — osserva sempre la griglia specifica prima di iniziare a cliccare.</div>
+  </div>
+
+  <div class="annex">
+    <h2>03 — Dopo l'hack: MOUNT o MINE</h2>
+    <p>Una volta craccato, cliccando di nuovo sul computer si aprono due opzioni:</p>
+
+    <div class="legend-grid">
+      <div class="legend-item">
+        <b>MOUNT</b>
+        Da usare per navigare nel Dark Net. Consuma un token di mount; <span class="term">UNMOUNT</span> restituisce il token quando hai finito.
+      </div>
+      <div class="legend-item">
+        <b>MINE</b>
+        Da usare per minare criptovaluta passivamente. <span class="term">UNMINE non restituisce</span> il token investito: è un impegno più permanente.
+      </div>
+    </div>
+
+    <h3>Dopo MOUNT</h3>
+    <p>Il token viene consumato e parte un breve processo di montaggio. Una volta completato, cliccando di nuovo sul computer ora montato puoi scegliere <span class="term">ENTER</span> per usarlo effettivamente per navigare nel Dark Net.</p>
+
+    <h3>Gestire i token</h3>
+    <p>I token disponibili per mount e mine si vedono in alto a destra nell'interfaccia di VirtMesh (icona a cubo per i mount, icona a ingranaggio per i mine, ciascuna con un contatore tipo "1/2").</p>
+    <div class="warn-line">Consiglio: monta più computer e alternali regolarmente. Restare collegati troppo a lungo su uno solo rischia di far perdere l'accesso a quel computer.</div>
+  </div>
+
+  <div class="annex">
+    <h2>04 — Muoversi nella VirtMesh</h2>
+    <ul>
+      <li>Mentre usi un computer montato, puoi tornare al tuo <span class="term">desktop principale</span> o alla vista <span class="term">VirtMesh</span> usando i due pulsanti nella taskbar in basso a destra (passandoci sopra col mouse ne vedi la funzione).</li>
+      <li>Tornare al desktop principale <span class="term">non ti disconnette</span> dal computer montato: la connessione resta attiva in background.</li>
+      <li>Per uscire completamente da VirtMesh, clicca due volte sul cerchio centrale con la scritta <span class="term">[EXIT]</span>.</li>
+    </ul>
+  </div>
+
+  <div class="roadmap">
+    <h4>// In lavorazione</h4>
+    <div class="roadmap-grid">
+      <div class="roadmap-item"><b>Wiki Block</b>Mappa dei 52 siti darknet, orari e indizi chiave</div>
+      <div class="roadmap-item"><b>Note / Master Key</b>Blocco appunti con compilazione automatica</div>
+      <div class="roadmap-item"><b>Mercato</b>Prezzi upgrade, oggetti utili</div>
+      <div class="roadmap-item"><b>Trainer INJ3KT-R</b>Versione interattiva del puzzle per allenarsi, appena avremo più esempi da diverse griglie</div>
+    </div>
+  </div>
+
+  <footer class="credits">Fan project non ufficiale · Welcome to the Game III è proprietà di Reflect Studios · dati aggiornati a luglio 2026, verificare dopo ogni patch</footer>
+</div>
+
+<script src="js/nav.js"></script>
+</body>
+</html>

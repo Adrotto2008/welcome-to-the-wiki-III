@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WTTG3 Assistant — Minacce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/nav.css">
+</head>
+<body data-page="threats">
+<div class="wrap">
+
+  <header class="hero">
+    <div class="stamp-num">CASE FILE NO. 003 — SIMON ZHAO / “THE GAME”</div>
+    <h1 class="title">WTTG3 Assistant</h1>
+    <p class="subtitle">Plancia investigativa non ufficiale sulle minacce di <strong>Welcome to the Game III</strong>.
+    Dossier ufficiali di gioco + note della community raccolte nei primi giorni dal rilascio (16 luglio 2026) — <span class="redacted-bar">████████</span> possono cambiare con le patch.</p>
+    <nav class="site-nav" id="site-nav"></nav>
+    <div class="tape-divider"></div>
+  </header>
+
+  <div class="controls">
+    <div class="search-box">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#cabf9f" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="searchInput" type="text" placeholder="Cerca una minaccia (es. Lucas, Breather...)">
+    </div>
+    <div class="filters" id="filterGroup">
+      <button class="filter-btn active" data-filter="all">Tutte</button>
+      <button class="filter-btn" data-filter="confirmed">Confermate</button>
+      <button class="filter-btn" data-filter="unconfirmed">Solo demo / da verificare</button>
+    </div>
+  </div>
+
+  <div class="board" id="board"></div>
+
+  <div class="roadmap">
+    <h4>// In lavorazione</h4>
+    <div class="roadmap-grid">
+      <div class="roadmap-item"><b>Wiki Block</b>Mappa dei 52 siti darknet, orari e indizi chiave</div>
+      <div class="roadmap-item"><b>Note / Master Key</b>Blocco appunti con compilazione automatica</div>
+      <div class="roadmap-item"><b>Mercato</b>Prezzi upgrade, oggetti utili</div>
+      <div class="roadmap-item"><b>Audio Cue Trainer</b>Allenamento riconoscimento suoni delle minacce</div>
+    </div>
+  </div>
+
+  <footer class="credits">Fan project non ufficiale · Welcome to the Game III è proprietà di Reflect Studios · dati aggiornati a luglio 2026, verificare dopo ogni patch</footer>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modalContent"></div>
+</div>
+
+<script src="js/threats-data.js"></script>
+<script src="js/app.js"></script>
+<script src="js/nav.js"></script>
+</body>
+</html>

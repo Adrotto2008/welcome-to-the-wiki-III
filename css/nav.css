@@ -1,0 +1,21 @@
+.site-nav{
+  display:flex;
+  gap:6px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin:18px 0 0;
+}
+.nav-link{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11.5px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:var(--paper-dim);
+  text-decoration:none;
+  padding:8px 16px;
+  border:1px solid rgba(255,255,255,0.15);
+  border-radius:3px;
+  transition:all 0.15s ease;
+}
+.nav-link:hover{border-color:var(--rust-bright); color:var(--paper);}
+.nav-link.active{background:var(--rust); border-color:var(--rust); color:#fff;}
