@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WTTG3 Assistant — Minigiochi di difesa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/nav.css">
+<link rel="stylesheet" href="css/virtmesh.css">
+<link rel="stylesheet" href="css/hacks.css">
+</head>
+<body data-page="hacks">
+<div class="wrap">
+
+  <header class="hero">
+    <div class="stamp-num">CASE FILE NO. 003 — ALLEGATO TECNICO</div>
+    <h1 class="title">Minigiochi di difesa</h1>
+    <p class="subtitle">I 5 strumenti di sicurezza che usi per bloccare un attacco hacker in corso — diversi dal puzzle INJ3KT-R che usi per craccare gli altri (quello è offensivo, questi sono difensivi).</p>
+    <nav class="site-nav" id="site-nav"></nav>
+    <div class="tape-divider"></div>
+  </header>
+
+  <div class="tool-nav">
+    <a href="#kernel">K3RN3LCOMP1L3R</a>
+    <a href="#memdeallocater">memDEALLOCATER</a>
+    <a href="#shiftseq">shiftSEQ</a>
+    <a href="#stackpusher">stackPUSHER</a>
+    <a href="#tokenine">TOKENINE</a>
+  </div>
+
+  <!-- K3RN3LCOMP1L3R -->
+  <div class="annex" id="kernel">
+    <h2 class="tool-name">K3RN3LCOMP1L3R</h2>
+    <p>Strumento molto rispettato nella community della cybersicurezza: contiene e rimuove i blocchi di memoria corrotti prima che danneggino il sistema host.</p>
+
+    <h3>Come funziona</h3>
+    <p>Compare un blocco di memoria corrotto sotto forma di righe di testo numerate (0, 1, 2...). Una riga alla volta viene evidenziata: devi <span class="term">ricopiarla esattamente</span> nel campo di input e premere <span class="key-chip">ENTER</span>.</p>
+
+    <div class="terminal-block">
+      <div class="t-header">0xFF03N4</div>
+      <div class="t-line active">0&nbsp;&nbsp;The sounds drew nearer. Three blows were struck upon the panel of the door.</div>
+      <div class="t-line">1&nbsp;&nbsp;but perhaps he whom you await is inconstant</div>
+      <div class="t-prompt">&gt; _</div>
+    </div>
+
+    <ul>
+      <li>Digitare correttamente la riga fa avanzare a quella successiva; dopo l'ultima riga l'attacco è bloccato.</li>
+      <li>Un errore evidenzia in <span style="color:#e07a6b;">rosso</span> sia la riga attiva che il testo digitato: si corregge cancellando i caratteri con <span class="key-chip">BACKSPACE</span>.</li>
+      <li>Il numero totale di blocchi di memoria corrotti da rimuovere è visibile nell'angolo in basso a sinistra.</li>
+    </ul>
+
+    <div class="warn-line">Versioni più difficili: più blocchi corrotti da contrastare in sequenza, testo sostituito da stringhe di codice, oppure entrambe le cose insieme.</div>
+  </div>
+
+  <!-- memDEALLOCATER -->
+  <div class="annex" id="memdeallocater">
+    <h2 class="tool-name">memDEALLOCATER</h2>
+    <p>Nato come progetto open source contro gli attacchi di memory injection, oggi è uno standard di sicurezza usato in tutta la tecnologia A.D.O.S.</p>
+
+    <h3>Come funziona</h3>
+    <p>Viene mostrato un blocco di memoria diviso in due colonne (sinistra/destra) di cifre binarie. Ogni riga ha porzioni <span style="color:#8fe89a;">verdi</span> (sicure) e <span style="color:#e07a6b;">rosse</span> (da evitare). Si parte dal basso e si sale: devi dirigere il blocco a sinistra, destra o skip in base a quale porzione è verde nella riga più bassa.</p>
+    <p>Ogni tasto premuto fa scendere il blocco di una riga, e una nuova riga appare in alto — conviene guardare le righe in arrivo per anticipare la mossa.</p>
+
+    <div class="rule-row"><span class="swatch half-green-red" style="background:linear-gradient(90deg,#4caf50 50%, #123c1c 50%)"></span> Sezione sinistra verde → <span class="key-chip">A</span> / <span class="key-chip">◄</span></div>
+    <div class="rule-row"><span class="swatch green"></span> Entrambe le sezioni verdi → <span class="key-chip">SPACEBAR</span> (skip)</div>
+    <div class="rule-row"><span class="swatch half-green-red" style="background:linear-gradient(90deg,#123c1c 50%, #4caf50 50%)"></span> Sezione destra verde → <span class="key-chip">D</span> / <span class="key-chip">►</span></div>
+
+    <p>Le azioni corrette riempiono la barra di progresso in alto; quelle sbagliate la riducono. Barra piena = hack bloccato.</p>
+
+    <div class="warn-line">Versioni più difficili: viene rimosso l'indizio del tasto sotto il blocco di memoria, e sbagliare costa una penalità più severa.</div>
+  </div>
+
+  <!-- shiftSEQ -->
+  <div class="annex" id="shiftseq">
+    <h2 class="tool-name">shiftSEQ</h2>
+    <p>Sistema di sicurezza endpoint che rileva e smista payload di codice malevolo. La rete a cui sei connesso viene semplificata in una rete di nodi da navigare e difendere.</p>
+
+    <h3>Come funziona</h3>
+    <ul>
+      <li>Parti sempre dentro il <span class="term">nodo casa</span> (al centro). Finché sei dentro, gli attacchi sono bloccati.</li>
+      <li>I nodi periferici possono infettarsi (contorno rosso). Devi navigare fino a ognuno e distruggerlo.</li>
+      <li>Se sei <span class="term">fuori</span> dal nodo casa quando un attacco lo raggiunge, la tua salute della connessione diminuisce — è l'unico modo di fallire in anticipo. Attraversare i nodi infetti muovendoti non fa danno di per sé.</li>
+    </ul>
+
+    <h3>Controlli</h3>
+    <p>
+      <span class="key-chip">W</span> Su &nbsp;
+      <span class="key-chip">A</span> Sinistra &nbsp;
+      <span class="key-chip">S</span> Giù &nbsp;
+      <span class="key-chip">D</span> Destra &nbsp;
+      <span class="key-chip">SPACEBAR</span> Attacca il nodo infetto (o ripristino attivo se sei nel nodo casa)
+    </p>
+    <p>Una volta sopra un nodo infetto, premi ripetutamente <span class="key-chip">SPACEBAR</span> per portarne la salute a zero.</p>
+
+    <h3>Risorse</h3>
+    <p>Hai risorse limitate (misurate dall'icona a batteria in basso a destra) e devi tornare al nodo casa per ricaricarle. Per una ricarica rapida, premi <span class="key-chip">SPACEBAR</span> esattamente quando l'impulso in espansione dal nodo casa si sovrappone al suo contorno pieno. Sbagliare il tempismo disabilita temporaneamente ogni ricarica.</p>
+
+    <div class="warn-line">Versioni più difficili: attacchi ai nodi più rapidi e frequenti, penalità maggiore se un attacco non viene bloccato in tempo, più nodi infetti da distruggere.</div>
+  </div>
+
+  <!-- stackPUSHER -->
+  <div class="annex" id="stackpusher">
+    <h2 class="tool-name">stackPUSHER</h2>
+    <p>Strumento per prevenire attacchi di stack overflow, sviluppato dal laureato in informatica Tyler Draven nel 2015 — oggi uno strumento di sicurezza di riferimento.</p>
+
+    <h3>Come funziona</h3>
+    <p>Viene mostrata una griglia con: un <span class="term">nodo pusher</span>, diversi <span class="term">nodi stack</span>, un <span class="term">nodo popper</span> (l'obiettivo finale) e delle caselle con un <span style="color:#e07a6b;">teschio ridente</span> da evitare assolutamente.</p>
+
+    <div class="grid-demo" aria-hidden="true">
+      <div class="g-cell skull">💀</div><div class="g-cell"></div><div class="g-cell"></div><div class="g-cell"></div><div class="g-cell"></div>
+      <div class="g-cell"></div><div class="g-cell stack">▤</div><div class="g-cell"></div><div class="g-cell stack">▤</div><div class="g-cell"></div>
+      <div class="g-cell stack">▤</div><div class="g-cell pusher">◈</div><div class="g-cell stack">▤</div><div class="g-cell"></div><div class="g-cell"></div>
+      <div class="g-cell"></div><div class="g-cell stack">▤</div><div class="g-cell popper">✳</div><div class="g-cell"></div><div class="g-cell"></div>
+    </div>
+
+    <ul>
+      <li>I nodi stack possono muoversi <span class="term">solo</span> quando attivati dal pusher.</li>
+      <li>Clicca <span class="key-chip">LMB</span> sul pusher per "prenderlo", clicca di nuovo per posizionarlo altrove sulla griglia. Stessa cosa per i nodi stack: click per prendere, click per posare.</li>
+      <li>Un nodo stack si può muovere solo dentro la <span class="term">matrice 3x3</span> intorno al pusher — quindi il posizionamento del pusher è la vera strategia.</li>
+      <li>L'obiettivo è spingere tutti i nodi stack dentro il nodo popper.</li>
+    </ul>
+
+    <div class="warn-line">Attenzione: posare un nodo sopra un teschio ridente causa un fallimento immediato.</div>
+  </div>
+
+  <!-- TOKENINE -->
+  <div class="annex" id="tokenine">
+    <h2 class="tool-name">TOKENINE</h2>
+    <p>Servizio che ascolta il traffico di rete non autorizzato. Normalmente, se trova qualcosa, chiede all'utente di validarlo manualmente (ignorare l'avviso blocca tutto automaticamente) — ma un exploit recente ha invertito la logica: ora è la validazione stessa a dover fermare l'accesso non autorizzato.</p>
+
+    <h3>Come funziona</h3>
+    <p>Viene mostrato un token di autenticazione target (una forma fatta di più "pezzi") insieme a una griglia 3x3 di pezzi possibili. Devi assemblare il token corretto cliccando <span class="key-chip">LMB</span> su ogni pezzo giusto, nell'ordine mostrato a fianco.</p>
+
+    <div class="token-piece-grid" aria-hidden="true">
+      <div class="t-cell"></div><div class="t-cell chosen"></div><div class="t-cell"></div>
+      <div class="t-cell"></div><div class="t-cell"></div><div class="t-cell chosen"></div>
+      <div class="t-cell"></div><div class="t-cell"></div><div class="t-cell"></div>
+    </div>
+    <div class="piece-counter"><span class="piece-dot filled"></span><span class="piece-dot"></span></div>
+    <p style="text-align:center; font-size:11.5px; color:#8a9c8c;">I quadratini sotto al token target indicano quanti pezzi servono per completarlo (qui: 2).</p>
+
+    <ul>
+      <li>Una volta scelto un pezzo <span class="term">non si può rimuovere</span>. Quando il token è completo viene controllato: se sbagliato, viene cancellato e devi ritentare.</li>
+      <li>Un tentativo riuscito passa al token successivo della serie, se presente.</li>
+      <li><span class="term">C'è un tempo limitato</span> tra una scelta e l'altra: seleziona sempre qualcosa, anche se sbagliato, per evitare un fallimento anticipato per timeout.</li>
+    </ul>
+
+    <div class="timer-bar-demo danger"><div class="fill" style="width:30%;"></div></div>
+
+    <div class="warn-line">Versioni più difficili: più token da assemblare in serie, distorsioni visive sul token da copiare, e token che richiedono più pezzi per essere completati.</div>
+  </div>
+
+  <div class="roadmap">
+    <h4>// In lavorazione</h4>
+    <div class="roadmap-grid">
+      <div class="roadmap-item"><b>Wiki Block</b>Mappa dei 52 siti darknet, orari e indizi chiave</div>
+      <div class="roadmap-item"><b>Note / Master Key</b>Blocco appunti con compilazione automatica</div>
+      <div class="roadmap-item"><b>Mercato</b>Prezzi upgrade, oggetti utili</div>
+      <div class="roadmap-item"><b>Trainer interattivi</b>Versioni giocabili di INJ3KT-R e dei 5 minigiochi di difesa</div>
+    </div>
+  </div>
+
+  <footer class="credits">Fan project non ufficiale · Welcome to the Game III è proprietà di Reflect Studios · dati aggiornati a luglio 2026, verificare dopo ogni patch</footer>
+</div>
+
+<script src="js/nav.js"></script>
+</body>
+</html>

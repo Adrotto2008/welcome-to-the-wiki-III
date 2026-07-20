@@ -6,7 +6,8 @@
     { id: 'home', href: 'index.html', label: 'Hub' },
     { id: 'threats', href: 'threats.html', label: 'Minacce' },
     { id: 'virtmesh', href: 'virtmesh.html', label: 'VirtMesh' },
-    { id: 'hacks', href: 'hacks.html', label: 'Minigiochi' }
+    { id: 'hacks', href: 'hacks.html', label: 'Minigiochi' },
+    { id: 'trainers', href: 'trainers.html', label: 'Allenamenti' }
   ];
   const nav = document.getElementById('site-nav');
   if (!nav) return;

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WTTG3 Assistant — Allenamenti</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/nav.css">
+<link rel="stylesheet" href="css/virtmesh.css">
+<link rel="stylesheet" href="css/hacks.css">
+<link rel="stylesheet" href="css/trainers.css">
+</head>
+<body data-page="trainers">
+<div class="wrap">
+
+  <header class="hero">
+    <div class="stamp-num">CASE FILE NO. 003 — SIMULAZIONE</div>
+    <h1 class="title">Allenamenti</h1>
+    <p class="subtitle">Versioni giocabili semplificate dei 5 minigiochi di difesa, per fare pratica prima di trovarsi davanti a un attacco vero. Dove il gioco non specifica numeri esatti (velocità, tempi, dimensioni) uso valori plausibili, segnalati come approssimativi.</p>
+    <nav class="site-nav" id="site-nav"></nav>
+    <div class="tape-divider"></div>
+  </header>
+
+  <div class="trainer-tabs">
+    <button class="ttab active" data-target="panel-kernel">K3RN3LCOMP1L3R</button>
+    <button class="ttab" data-target="panel-mem">memDEALLOCATER</button>
+    <button class="ttab" data-target="panel-shiftseq">shiftSEQ</button>
+    <button class="ttab" data-target="panel-stackpusher">stackPUSHER</button>
+    <button class="ttab" data-target="panel-tokenine">TOKENINE</button>
+  </div>
+
+  <!-- K3RN3LCOMP1L3R -->
+  <section class="trainer-panel active" id="panel-kernel">
+    <div class="status-row">
+      <div class="diff-toggle" id="k-diff">
+        <button class="active" data-diff="easy">Facile (testo)</button>
+        <button data-diff="hard">Difficile (codice, più blocchi)</button>
+      </div>
+      <span>Blocchi rimasti: <b id="k-counter">1</b></span>
+      <button class="btn-action secondary" id="k-reset">Rigenera</button>
+    </div>
+    <div class="banner" id="k-banner"></div>
+    <div class="trainer-stage">
+      <div class="terminal-block">
+        <div class="t-header" id="k-header">0xFF03N4</div>
+        <div id="k-lines"></div>
+        <div class="kernel-input-line">
+          <span>&gt;</span>
+          <input type="text" id="k-input" autocomplete="off" spellcheck="false" placeholder="Digita qui la riga evidenziata...">
+        </div>
+      </div>
+      <p class="approx-note">Copia esattamente la riga evidenziata e premi Invio. Se sbagli, correggi con Backspace prima di reinviare.</p>
+    </div>
+  </section>
+
+  <!-- memDEALLOCATER -->
+  <section class="trainer-panel" id="panel-mem">
+    <div class="status-row">
+      <div class="diff-toggle" id="m-diff">
+        <button class="active" data-diff="easy">Facile (con indizio)</button>
+        <button data-diff="hard">Difficile (senza indizio)</button>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="m-progress-fill" style="width:0%;"></div></div>
+      <button class="btn-action secondary" id="m-reset">Ricomincia</button>
+    </div>
+    <div class="banner" id="m-banner"></div>
+    <div class="trainer-stage">
+      <div class="mem-stage" id="m-stage"></div>
+      <div class="mem-hint" id="m-hint"></div>
+      <p class="approx-note">Riga attiva in basso. <span class="key-chip">A</span> se la sinistra è verde, <span class="key-chip">D</span> se lo è la destra, <span class="key-chip">SPACE</span> se lo sono entrambe. La finestra e la velocità sono approssimative.</p>
+    </div>
+  </section>
+
+  <!-- shiftSEQ -->
+  <section class="trainer-panel" id="panel-shiftseq">
+    <div class="status-row">
+      <div class="diff-toggle" id="sq-diff">
+        <button class="active" data-diff="easy">Facile (2 nodi infetti)</button>
+        <button data-diff="hard">Difficile (3 nodi, più veloce)</button>
+      </div>
+      <button class="btn-action secondary" id="sq-reset">Ricomincia</button>
+    </div>
+    <div class="banner" id="sq-banner"></div>
+    <div class="trainer-stage">
+      <div class="status-row">
+        <span>Salute connessione</span>
+        <div class="progress-track"><div class="progress-fill danger" id="sq-health-fill" style="width:100%;"></div></div>
+      </div>
+      <div class="status-row">
+        <span>Energia</span>
+        <div class="progress-track"><div class="progress-fill energy" id="sq-energy-fill" style="width:100%;"></div></div>
+      </div>
+      <div class="sq-stage" id="sq-stage"></div>
+      <div class="sq-keys">
+        <span class="key-chip">W</span><span class="key-chip">A</span><span class="key-chip">S</span><span class="key-chip">D</span> per muoverti tra hub e nodo &nbsp;·&nbsp;
+        <span class="key-chip">SPACE</span> per attaccare (sul nodo infetto) o ricaricare al momento giusto (nel nodo home)
+      </div>
+      <p class="approx-note">Layout semplificato a 4 nodi + home (invece degli 8 nodi visti negli screenshot) per rendere i comandi WASD intuitivi. Tempi di impulso e finestra di ricarica sono approssimativi.</p>
+    </div>
+  </section>
+
+  <!-- stackPUSHER -->
+  <section class="trainer-panel" id="panel-stackpusher">
+    <div class="status-row">
+      <div class="diff-toggle" id="sp-diff">
+        <button class="active" data-diff="easy">Facile</button>
+        <button data-diff="hard">Difficile</button>
+      </div>
+      <span>Nodi stack rimasti: <b id="sp-remaining">0</b></span>
+      <button class="btn-action secondary" id="sp-reset">Ricomincia livello</button>
+      <button class="btn-action secondary" id="sp-next">Livello successivo</button>
+    </div>
+    <div class="banner" id="sp-banner"></div>
+    <div class="trainer-stage">
+      <div class="grid-demo" id="sp-grid" style="margin:0 auto;"></div>
+      <p class="approx-note">Clicca il pusher (◈) per selezionarlo, poi clicca una cella libera per spostarlo. Clicca un nodo stack (▤) entro l'area 3×3 del pusher per selezionarlo, poi clicca dove spostarlo (anche il popper ✳ per consegnarlo). Evita i teschi (💀): posarci sopra qualsiasi nodo causa fallimento immediato.</p>
+    </div>
+  </section>
+
+  <!-- TOKENINE -->
+  <section class="trainer-panel" id="panel-tokenine">
+    <div class="status-row">
+      <div class="diff-toggle" id="tk-diff">
+        <button class="active" data-diff="easy">Facile (2 pezzi)</button>
+        <button data-diff="hard">Difficile (4 pezzi)</button>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="tk-timer-fill" style="width:100%;"></div></div>
+      <button class="btn-action secondary" id="tk-reset">Nuovo token</button>
+    </div>
+    <div class="banner" id="tk-banner"></div>
+    <div class="trainer-stage">
+      <div class="tk-layout">
+        <div class="tk-palette" id="tk-palette"></div>
+        <div class="tk-target" id="tk-target"></div>
+      </div>
+      <p class="approx-note">Clicca i pezzi nella palette nell'ordine mostrato a destra (dall'alto verso il basso). Hai un tempo limitato tra una selezione e l'altra: se scade, fallisci. Nel gioco vero il controllo avviene solo alla fine; qui, per allenarsi meglio, il feedback è immediato pezzo per pezzo.</p>
+    </div>
+  </section>
+
+  <div class="roadmap">
+    <h4>// In lavorazione</h4>
+    <div class="roadmap-grid">
+      <div class="roadmap-item"><b>Wiki Block</b>Mappa dei 52 siti darknet, orari e indizi chiave</div>
+      <div class="roadmap-item"><b>Note / Master Key</b>Blocco appunti con compilazione automatica</div>
+      <div class="roadmap-item"><b>Mercato</b>Prezzi upgrade, oggetti utili</div>
+      <div class="roadmap-item"><b>Trainer INJ3KT-R</b>Versione giocabile del puzzle di hacking offensivo</div>
+    </div>
+  </div>
+
+  <footer class="credits">Fan project non ufficiale · Welcome to the Game III è proprietà di Reflect Studios · dati aggiornati a luglio 2026, verificare dopo ogni patch</footer>
+</div>
+
+<script src="js/nav.js"></script>
+<script src="js/trainers-common.js"></script>
+<script src="js/trainers-kernel.js"></script>
+<script src="js/trainers-memdealloc.js"></script>
+<script src="js/trainers-shiftseq.js"></script>
+<script src="js/trainers-stackpusher.js"></script>
+<script src="js/trainers-tokenine.js"></script>
+</body>
+</html>
