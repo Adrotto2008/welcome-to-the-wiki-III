@@ -141,6 +141,7 @@
 .char-ok{color:#8fe89a;}
 .char-bad{color:#ff8a7a; background:rgba(192,57,43,0.25);}
 .t-line.error{background:rgba(192,57,43,0.18); color:#ffd0cc;}
+.kernel-input-line input.is-wrong{color:#ff8a7a;}
 
 /* memDEALLOCATER */
 .mem-stage{
@@ -220,11 +221,10 @@
   inset:-8px;
   border-radius:50%;
   border:2px solid rgba(143,232,154,0.5);
-  animation:sqPulse 2s linear infinite;
-}
-@keyframes sqPulse{
-  0%{transform:scale(0.4); opacity:0.9;}
-  100%{transform:scale(1.6); opacity:0;}
+  pointer-events:none;
+  /* niente piu' @keyframes qui: la fase e' calcolata in JS ad ogni frame
+     (vedi trainers-shiftseq.js) cosi' il disegno e il controllo del timing
+     usano sempre lo stesso identico valore e non vanno mai fuori sync. */
 }
 .sq-node .node-health{
   position:absolute;
@@ -271,6 +271,7 @@
 }
 .tk-cell:hover{background:rgba(143,232,154,0.1);}
 .tk-cell.used{opacity:0.15; pointer-events:none;}
+.tk-palette.frozen{opacity:0.4; pointer-events:none;}
 .tk-target{
   min-width:120px;
   display:flex;

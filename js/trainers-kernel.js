@@ -1,4 +1,15 @@
 // Trainer K3RN3LCOMP1L3R — digitazione delle righe evidenziate
+//
+// BUG CORRETTI in questa versione:
+// 1) Il campo di input non veniva mai svuotato dopo aver completato correttamente
+//    una riga: il testo vecchio restava nel box e si sommava a quello nuovo,
+//    rendendo impossibile completare la riga successiva senza cancellare a mano.
+// 2) Al completamento dell'ULTIMO blocco, l'indice veniva incrementato oltre
+//    il numero di blocchi disponibili e poi si chiamava comunque render():
+//    "blocks[blockIndex]" risultava undefined e lo script andava in errore
+//    (schermata che restava a metà, console con TypeError).
+// Aggiunte: maxlength sul campo per non poter "sovra-digitare", e un indicatore
+// visivo (bordo/colore rosso sul campo) quando il testo digitato non combacia.
 
 (function () {
   const EASY_BLOCKS = [
@@ -15,6 +26,7 @@
   let lineIndex = 0;
   let typed = '';
   let difficulty = 'easy';
+  let completed = false;
 
   const el = {
     header: document.getElementById('k-header'),
@@ -26,69 +38,81 @@
     diffButtons: document.querySelectorAll('#k-diff button')
   };
 
-  function currentLine() {
-    return blocks[blockIndex][lineIndex];
-  }
-
-  function totalBlocksLeft() {
-    return blocks.length - blockIndex;
-  }
-
-  function render() {
-    el.header.textContent = '0xFF' + (blockIndex * 7 + lineIndex + 3).toString(16).toUpperCase().padStart(2, '0') + 'N4';
-    el.counter.textContent = totalBlocksLeft();
-    const block = blocks[blockIndex];
-    el.lines.innerHTML = block.map((line, i) => {
-      if (i < lineIndex) return `<div class="t-line">${i}&nbsp;&nbsp;${escapeHtml(line)}</div>`;
-      if (i === lineIndex) return `<div class="t-line active" id="k-active-line">${i}&nbsp;&nbsp;${renderCompare(line, typed)}</div>`;
-      return `<div class="t-line" style="opacity:0.35;">${i}&nbsp;&nbsp;${escapeHtml(line)}</div>`;
-    }).join('');
-  }
+  function currentBlock() { return blocks[blockIndex]; }
+  function currentLine() { return currentBlock()[lineIndex]; }
+  function blocksLeft() { return completed ? 0 : blocks.length - blockIndex; }
 
   function escapeHtml(s) {
     return s.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
   }
 
+  // Confronta target e testo digitato carattere per carattere.
+  // Ritorna anche se c'è un mismatch, così possiamo colorare pure il campo input.
   function renderCompare(target, input) {
     let out = '';
     let mismatchAt = -1;
     for (let i = 0; i < target.length; i++) {
       if (i >= input.length) { out += escapeHtml(target[i]); continue; }
       if (mismatchAt === -1 && input[i] !== target[i]) mismatchAt = i;
-      if (mismatchAt !== -1) out += `<span class="char-bad">${escapeHtml(target[i])}</span>`;
-      else out += `<span class="char-ok">${escapeHtml(target[i])}</span>`;
+      out += mismatchAt !== -1
+        ? `<span class="char-bad">${escapeHtml(target[i])}</span>`
+        : `<span class="char-ok">${escapeHtml(target[i])}</span>`;
     }
-    return out;
+    return { html: out, hasMismatch: mismatchAt !== -1 };
+  }
+
+  function render() {
+    const block = currentBlock();
+    el.header.textContent = '0xFF' + (blockIndex * 7 + lineIndex + 3).toString(16).toUpperCase().padStart(2, '0') + 'N4';
+    el.counter.textContent = blocksLeft();
+
+    el.lines.innerHTML = block.map((line, i) => {
+      if (completed || i < lineIndex) {
+        return `<div class="t-line">${i}&nbsp;&nbsp;${escapeHtml(line)}</div>`;
+      }
+      if (i === lineIndex) {
+        const cmp = renderCompare(line, typed);
+        el.input.classList.toggle('is-wrong', cmp.hasMismatch);
+        el.input.maxLength = line.length;
+        return `<div class="t-line active">${i}&nbsp;&nbsp;${cmp.html}</div>`;
+      }
+      return `<div class="t-line" style="opacity:0.35;">${i}&nbsp;&nbsp;${escapeHtml(line)}</div>`;
+    }).join('');
   }
 
   function showBanner(msg, type) {
     el.banner.textContent = msg;
     el.banner.className = 'banner show ' + type;
   }
-
-  function hideBanner() {
-    el.banner.className = 'banner';
-  }
+  function hideBanner() { el.banner.className = 'banner'; }
 
   function submit() {
-    if (typed === currentLine()) {
-      typed = '';
+    if (completed) return;
+    if (typed !== currentLine()) return; // il colore rosso già segnala l'errore, niente da fare qui
+
+    const block = currentBlock();
+
+    // FIX bug #1: il campo va sempre svuotato quando si avanza di riga.
+    typed = '';
+    el.input.value = '';
+    el.input.classList.remove('is-wrong');
+
+    // FIX bug #2: calcoliamo se è l'ultima riga/ultimo blocco PRIMA di toccare
+    // gli indici, così non finiamo mai fuori range.
+    if (lineIndex < block.length - 1) {
       lineIndex++;
-      if (lineIndex >= blocks[blockIndex].length) {
-        lineIndex = 0;
-        blockIndex++;
-        if (blockIndex >= blocks.length) {
-          showBanner('HACK BLOCCATO — tutti i blocchi risolti.', 'win');
-          el.input.disabled = true;
-          render();
-          return;
-        }
-      }
-      hideBanner();
-      render();
+    } else if (blockIndex < blocks.length - 1) {
+      blockIndex++;
+      lineIndex = 0;
     } else {
-      // errore già visibile via renderCompare, non si sottomette
+      completed = true;
+      el.input.disabled = true;
+      showBanner('HACK BLOCCATO — tutti i blocchi risolti.', 'win');
+      render();
+      return;
     }
+    hideBanner();
+    render();
   }
 
   el.input.addEventListener('input', (e) => {
@@ -114,8 +138,10 @@
     blockIndex = 0;
     lineIndex = 0;
     typed = '';
+    completed = false;
     el.input.value = '';
     el.input.disabled = false;
+    el.input.classList.remove('is-wrong');
     hideBanner();
     render();
     el.input.focus();

@@ -85,19 +85,29 @@
     <div class="banner" id="sq-banner"></div>
     <div class="trainer-stage">
       <div class="status-row">
-        <span>Salute connessione</span>
+        <span>Salute connessione: <b id="sq-health-num">100</b>%</span>
         <div class="progress-track"><div class="progress-fill danger" id="sq-health-fill" style="width:100%;"></div></div>
       </div>
       <div class="status-row">
-        <span>Energia</span>
+        <span>Energia: <b id="sq-energy-num">100</b>%</span>
         <div class="progress-track"><div class="progress-fill energy" id="sq-energy-fill" style="width:100%;"></div></div>
       </div>
-      <div class="sq-stage" id="sq-stage"></div>
-      <div class="sq-keys">
-        <span class="key-chip">W</span><span class="key-chip">A</span><span class="key-chip">S</span><span class="key-chip">D</span> per muoverti tra hub e nodo &nbsp;·&nbsp;
-        <span class="key-chip">SPACE</span> per attaccare (sul nodo infetto) o ricaricare al momento giusto (nel nodo home)
+      <!-- I nodi esistono UNA sola volta qui nell'HTML: il JS aggiorna solo
+           classi/testo, non li ricrea mai. E' la correzione al bug che
+           rompeva l'animazione dell'anello di ricarica (vedi commento in
+           trainers-shiftseq.js). -->
+      <div class="sq-stage" id="sq-stage">
+        <div class="sq-node n" id="sq-node-n">N<span class="node-health" id="sq-health-n"></span></div>
+        <div class="sq-node w" id="sq-node-w">W<span class="node-health" id="sq-health-w"></span></div>
+        <div class="sq-node home" id="sq-node-home"><div class="recharge-ring" id="sq-ring"></div>HOME</div>
+        <div class="sq-node e" id="sq-node-e">E<span class="node-health" id="sq-health-e"></span></div>
+        <div class="sq-node s" id="sq-node-s">S<span class="node-health" id="sq-health-s"></span></div>
       </div>
-      <p class="approx-note">Layout semplificato a 4 nodi + home (invece degli 8 nodi visti negli screenshot) per rendere i comandi WASD intuitivi. Tempi di impulso e finestra di ricarica sono approssimativi.</p>
+      <div class="sq-keys">
+        <span class="key-chip">W</span><span class="key-chip">A</span><span class="key-chip">S</span><span class="key-chip">D</span> per muoverti (da un nodo esterno, un tasto qualsiasi torna alla home) &nbsp;·&nbsp;
+        <span class="key-chip">SPACE</span> per attaccare (sul nodo infetto) o ricaricare al momento giusto (nel nodo home, quando l'anello è quasi svanito)
+      </div>
+      <p class="approx-note">Layout semplificato a 4 nodi + home (invece degli 8 nodi visti negli screenshot). Tempi di impulso e finestra di ricarica sono approssimativi.</p>
     </div>
   </section>
 

@@ -1,4 +1,12 @@
 // Trainer memDEALLOCATER — premere il tasto giusto in base alla sezione verde
+//
+// BUG CORRETTI in questa versione:
+// 1) render() veniva chiamato due volte per ogni azione (una dentro l'if/else,
+//    una subito dopo, incondizionatamente) — ridondante, ripulito a una sola chiamata.
+// 2) La modalità difficile doveva applicare, secondo la documentazione, una
+//    "penalità più severa" per i tasti sbagliati: nella versione precedente la
+//    penalità era identica in entrambe le modalità (cambiava solo la visibilità
+//    del suggerimento). Ora la penalità in difficile è più alta.
 
 (function () {
   const ROW_COUNT = 6;
@@ -71,7 +79,7 @@
       el.hint.textContent = '';
     }
 
-    el.progressFill.style.width = progress + '%';
+    el.progressFill.style.width = Math.max(0, progress) + '%';
   }
 
   function showBanner(msg, type) {
@@ -84,9 +92,11 @@
 
   function act(action) {
     if (!running) return;
+
     const correct = action === requiredAction(activeRow());
-    progress += correct ? 12 : -18;
-    progress = Math.max(0, Math.min(100, progress));
+    const gain = 12;
+    const penalty = hardMode ? 30 : 18; // FIX: penalità più severa in difficile
+    progress = Math.max(0, Math.min(100, progress + (correct ? gain : -penalty)));
 
     rows.pop();
     rows.unshift(makeRow());
@@ -94,10 +104,8 @@
     if (progress >= 100) {
       running = false;
       showBanner('Attacco bloccato — barra piena!', 'win');
-    } else {
-      render();
     }
-    render();
+    render(); // FIX: una sola chiamata, non più duplicata
   }
 
   window.addEventListener('keydown', (e) => {

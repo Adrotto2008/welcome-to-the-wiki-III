@@ -1,35 +1,58 @@
 // Trainer stackPUSHER — puzzle a griglia con pusher, nodi stack, popper e teschi
+//
+// BUG CORRETTI in questa versione:
+// 1) GRAVE (design): i due livelli "facile" originali erano risolvibili senza
+//    MAI spostare il pusher (tutti gli stack e il popper erano già dentro la
+//    sua area 3x3 di partenza). Verificato con un solver a forza bruta:
+//    0 spostamenti richiesti. Il trainer, di fatto, non insegnava affatto la
+//    meccanica centrale del minigioco. Livelli rifatti e verificati col
+//    solver: ora richiedono almeno 1 spostamento reale del pusher.
+// 2) Il livello "difficile" faceva partire il pusher ESATTAMENTE sulla stessa
+//    cella del popper: l'icona del popper restava invisibile finché non si
+//    spostava il pusher altrove, sembrando "sparita"/rotta. Corretto
+//    separando sempre le celle di partenza di pusher/popper/stack/teschi.
+// 3) Una volta selezionato un elemento (pusher o stack), non si poteva
+//    cambiare selezione cliccando un altro elemento valido: bisognava per
+//    forza deselezionare prima. Ora cliccare un altro elemento selezionabile
+//    cambia semplicemente la selezione.
+// Tutti i livelli qui sotto sono stati verificati con un solver BFS separato
+// (solve_stackpusher.py) per garantire che siano risolvibili e non banali.
 
 (function () {
   const SIZE = 5;
 
-  // Layout preimpostati (garantiti risolvibili), coordinate {r,c}
   const LEVELS = {
     easy: [
       {
-        pusher: { r: 2, c: 2 },
-        stacks: [{ r: 1, c: 2 }, { r: 2, c: 1 }],
-        popper: { r: 2, c: 3 },
-        skulls: [{ r: 0, c: 4 }]
+        pusher: { r: 0, c: 0 },
+        stacks: [{ r: 2, c: 2 }, { r: 2, c: 3 }],
+        popper: { r: 2, c: 4 },
+        skulls: [{ r: 4, c: 4 }]
       },
       {
-        pusher: { r: 2, c: 1 },
-        stacks: [{ r: 1, c: 1 }, { r: 3, c: 1 }],
-        popper: { r: 2, c: 2 },
-        skulls: [{ r: 0, c: 0 }]
+        pusher: { r: 0, c: 4 },
+        stacks: [{ r: 2, c: 2 }, { r: 2, c: 1 }],
+        popper: { r: 2, c: 0 },
+        skulls: [{ r: 4, c: 0 }]
       }
     ],
     hard: [
       {
-        pusher: { r: 2, c: 2 },
-        stacks: [{ r: 0, c: 2 }, { r: 4, c: 2 }, { r: 2, c: 0 }, { r: 2, c: 4 }],
+        pusher: { r: 2, c: 0 },
+        stacks: [{ r: 0, c: 2 }, { r: 4, c: 2 }, { r: 2, c: 4 }],
         popper: { r: 2, c: 2 },
-        skulls: [{ r: 1, c: 1 }, { r: 3, c: 3 }, { r: 0, c: 0 }]
+        skulls: [{ r: 1, c: 2 }, { r: 3, c: 2 }, { r: 2, c: 3 }]
+      },
+      {
+        pusher: { r: 2, c: 4 },
+        stacks: [{ r: 0, c: 2 }, { r: 4, c: 2 }, { r: 2, c: 0 }],
+        popper: { r: 2, c: 2 },
+        skulls: [{ r: 1, c: 2 }, { r: 3, c: 2 }, { r: 2, c: 1 }]
       }
     ]
   };
 
-  let level, pusher, stacks, popper, skulls, selected, solved, failed;
+  let pusher, stacks, popper, skulls, selected, solved, failed;
   let difficulty = 'easy';
   let levelIndex = 0;
 
@@ -42,12 +65,17 @@
     diffButtons: document.querySelectorAll('#sp-diff button')
   };
 
-  function key(pos) { return pos.r + '_' + pos.c; }
   function sameCell(a, b) { return a.r === b.r && a.c === b.c; }
+  function within3x3(a, b) { return Math.abs(a.r - b.r) <= 1 && Math.abs(a.c - b.c) <= 1; }
+  function isSkull(pos) { return skulls.some(s => sameCell(s, pos)); }
+  function stackAt(pos) { return stacks.find(s => sameCell(s, pos)); }
+  function occupied(pos) {
+    return sameCell(pusher, pos) || stacks.some(s => sameCell(s, pos));
+  }
 
   function load() {
     const pool = LEVELS[difficulty];
-    level = pool[levelIndex % pool.length];
+    const level = pool[levelIndex % pool.length];
     pusher = { ...level.pusher };
     stacks = level.stacks.map(s => ({ ...s }));
     popper = { ...level.popper };
@@ -59,36 +87,48 @@
     render();
   }
 
-  function isSkull(pos) { return skulls.some(s => sameCell(s, pos)); }
-  function stackAt(pos) { return stacks.find(s => sameCell(s, pos)); }
-  function within3x3(a, b) { return Math.abs(a.r - b.r) <= 1 && Math.abs(a.c - b.c) <= 1; }
-  function occupied(pos) {
-    return sameCell(pusher, pos) || stacks.some(s => sameCell(s, pos));
+  function showBanner(msg, type) {
+    el.banner.textContent = msg;
+    el.banner.className = 'banner show ' + type;
+  }
+  function hideBanner() {
+    el.banner.className = 'banner';
   }
 
+  function fail(msg) {
+    failed = true;
+    showBanner(msg, 'fail');
+  }
+
+  function deliver(stackRef) {
+    stacks = stacks.filter(s => s !== stackRef);
+    if (stacks.length === 0) {
+      solved = true;
+      showBanner('Puzzle risolto — tutti i nodi stack sono nel popper!', 'win');
+    }
+  }
+
+  // FIX #3: modello di selezione più permissivo — cliccare un elemento diverso
+  // e valido CAMBIA la selezione invece di essere ignorato.
   function handleClick(r, c) {
     if (solved || failed) return;
     const pos = { r, c };
+    const clickedStack = stackAt(pos);
+    const clickedPusher = sameCell(pusher, pos);
 
-    if (!selected) {
-      if (sameCell(pusher, pos)) { selected = { type: 'pusher' }; render(); return; }
-      const st = stackAt(pos);
-      if (st && within3x3(pos, pusher)) { selected = { type: 'stack', ref: st }; render(); return; }
-      return;
-    }
+    // Click sullo stesso elemento già selezionato = deseleziona
+    if (selected && selected.type === 'pusher' && clickedPusher) { selected = null; render(); return; }
+    if (selected && selected.type === 'stack' && clickedStack === selected.ref) { selected = null; render(); return; }
 
-    // something selected: clicking the same item deselects
-    if (selected.type === 'pusher' && sameCell(pusher, pos)) { selected = null; render(); return; }
-    if (selected.type === 'stack' && sameCell(selected.ref, pos)) { selected = null; render(); return; }
+    // Click su un elemento selezionabile diverso = cambia selezione
+    if (clickedPusher) { selected = { type: 'pusher' }; render(); return; }
+    if (clickedStack && within3x3(pos, pusher)) { selected = { type: 'stack', ref: clickedStack }; render(); return; }
+
+    if (!selected) return; // niente selezionato, click a vuoto
 
     if (selected.type === 'pusher') {
-      if (occupied(pos) && !sameCell(pos, pusher)) return; // can't overlap another node
-      if (isSkull(pos)) {
-        failed = true;
-        showBanner('Fallimento: hai posato il pusher su un teschio ridente.', 'fail');
-        render();
-        return;
-      }
+      if (occupied(pos)) return; // non ci si può mettere sopra a uno stack
+      if (isSkull(pos)) { fail('Fallimento: hai posato il pusher su un teschio ridente.'); render(); return; }
       pusher = pos;
       selected = null;
       render();
@@ -96,43 +136,21 @@
     }
 
     if (selected.type === 'stack') {
-      if (!within3x3(pos, pusher)) return; // outside reach
+      if (!within3x3(pos, pusher)) return; // fuori dal raggio del pusher
       if (sameCell(pos, popper)) {
-        // delivered
-        stacks = stacks.filter(s => s !== selected.ref);
+        deliver(selected.ref);
         selected = null;
-        checkWin();
         render();
         return;
       }
       if (occupied(pos)) return;
-      if (isSkull(pos)) {
-        failed = true;
-        showBanner('Fallimento: hai posato un nodo stack su un teschio ridente.', 'fail');
-        render();
-        return;
-      }
+      if (isSkull(pos)) { fail('Fallimento: hai posato un nodo stack su un teschio ridente.'); render(); return; }
       selected.ref.r = pos.r;
       selected.ref.c = pos.c;
       selected = null;
       render();
       return;
     }
-  }
-
-  function checkWin() {
-    if (stacks.length === 0) {
-      solved = true;
-      showBanner('Puzzle risolto — tutti i nodi stack sono nel popper!', 'win');
-    }
-  }
-
-  function showBanner(msg, type) {
-    el.banner.textContent = msg;
-    el.banner.className = 'banner show ' + type;
-  }
-  function hideBanner() {
-    el.banner.className = 'banner';
   }
 
   function render() {
