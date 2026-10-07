@@ -69,3 +69,19 @@ Trattandosi di un sito puramente statico, non richiede alcuna installazione di N
 ## 📜 Licenza
 
 Progetto open source sviluppato a scopo didattico e di companion gaming per la community di *Welcome to the Game III*.
+
+---
+
+## 🎨 Vibe Coded & Aesthetics
+
+> **Vibe Coded:** Questo progetto è nato e sviluppato seguendo una filosofia di *vibe coding* puro — iterazione fluida, estetica immersiva ispirata al mondo cyberpunk/hacker di WTTG3, e massima attenzione all'atmosfera visiva e interattiva.
+
+---
+
+## 📸 Anteprime & Screenshot
+
+Ecco alcune schermate dall'applicazione in azione:
+
+| Schermata 1 | Schermata 2 | Schermata 3 |
+|:---:|:---:|:---:|
+| ![Screenshot 1](screenshots/Screenshot%202026-10-07%20190601.png) | ![Screenshot 2](screenshots/Screenshot%202026-10-07%20190621.png) | ![Screenshot 3](screenshots/Screenshot%202026-10-07%20190637.png) |
